@@ -1,4 +1,8 @@
 from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView
+from rest_framework .mixins import ListModelMixin
+from rest_framework.mixins import CreateModelMixin
+from rest_framework.mixins import UpdateModelMixin,DestroyModelMixin
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import StudentSerializer
@@ -30,4 +34,34 @@ class StudentView(APIView):
         student = Student.objects.get('id')
         student.delete()
         return Response({"message": "Student deleted"}, status=204)
+
+
+
+##################             Generic API      ###########################
+
+# GET  --->> If we want to Get one student's Data then Use Retrieve instead of List
+class StudentList(GenericAPIView, ListModelMixin):
+    queryset=Student.objects.all()
+    serializer_class=StudentSerializer
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+# POST
+class StudentCreate(GenericAPIView, CreateModelMixin):
+    queryset=Student.objects.all()
+    serializer_class=StudentSerializer
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+# UPDATE/PUT
+class StudentUpdate(GenericAPIView, UpdateModelMixin):
+    queryset=Student.objects.all()
+    serializer_class=StudentSerializer
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+# Delete
+class StudentDestroy(GenericAPIView,DestroyModelMixin):
+    queryset=Student.objects.all()
+    serializer_class=StudentSerializer
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
     
