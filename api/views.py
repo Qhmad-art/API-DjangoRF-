@@ -65,3 +65,35 @@ class StudentDestroy(GenericAPIView,DestroyModelMixin):
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
     
+    ############   GET and POST    #############
+
+
+class StudentGetCreate(ListModelMixin, CreateModelMixin, GenericAPIView):
+      queryset = Student.objects.all()
+      serializer_class = StudentSerializer
+
+    
+      def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+      def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)   
+       
+    ###############  UPDATE and  DELETE   #################
+
+
+    
+class StudentUpdateDelete(UpdateModelMixin, DestroyModelMixin, GenericAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+    
+
+    # Handle PUT requests to update a Student
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    # Handle DELETE requests to delete a book
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+

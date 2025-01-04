@@ -7,5 +7,7 @@ urlpatterns = [
     path("studentlist/", views.StudentList.as_view()),
     path('studentcreate/', views.StudentCreate.as_view()),
     path('studentupdate/', views.StudentUpdate.as_view()),
+    path('gpstudent/',views.StudentGetCreate.as_view()),
+    path('udstudent/<int:pk>/',views.StudentUpdateDelete.as_view()),
    
     ]
