@@ -3,6 +3,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework .mixins import ListModelMixin
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.mixins import UpdateModelMixin,DestroyModelMixin
+# from rest_framework.generics import CreateAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import StudentSerializer
@@ -96,4 +97,16 @@ class StudentUpdateDelete(UpdateModelMixin, DestroyModelMixin, GenericAPIView):
     # Handle DELETE requests to delete a book
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
+    
+ ########### Concrete  API View Same As Above ##################
+
+# # Create and Retrieve View
+# class StudentCreateRetrieveView(CreateAPIView, RetrieveAPIView):
+#     queryset = Student.objects.all()
+#     serializer_class = StudentSerializer
+
+# # Update and Delete View
+# class StudentUpdateDeleteView(UpdateAPIView, DestroyAPIView):
+#     queryset = Student.objects.all()
+#     serializer_class = StudentSerializer
 
