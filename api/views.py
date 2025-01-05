@@ -3,11 +3,14 @@ from rest_framework.generics import GenericAPIView
 from rest_framework .mixins import ListModelMixin
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.mixins import UpdateModelMixin,DestroyModelMixin
-# from rest_framework.generics import CreateAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework.generics import CreateAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.response import Response
+from rest_framework import viewsets
 from rest_framework import status
 from .serializers import StudentSerializer
 from .models import Student
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 class StudentView(APIView):
     def get(self, request,pk=None ,format=None):
         if pk is not None:
@@ -100,13 +103,20 @@ class StudentUpdateDelete(UpdateModelMixin, DestroyModelMixin, GenericAPIView):
     
  ########### Concrete  API View Same As Above ##################
 
-# # Create and Retrieve View
-# class StudentCreateRetrieveView(CreateAPIView, RetrieveAPIView):
-#     queryset = Student.objects.all()
-#     serializer_class = StudentSerializer
+# Create and Retrieve View
+class StudentCreateRetrieveView(CreateAPIView, RetrieveAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
 
-# # Update and Delete View
-# class StudentUpdateDeleteView(UpdateAPIView, DestroyAPIView):
-#     queryset = Student.objects.all()
-#     serializer_class = StudentSerializer
+# Update and Delete View
+class StudentUpdateDeleteView(UpdateAPIView, DestroyAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
 
+    ############ Model View Set & Autentication #################
+
+class StudentModelViewSet(viewsets.ModelViewSet):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+    authentication_classes=[SessionAuthentication,BasicAuthentication]
+    permission_classes=[IsAuthenticated]
